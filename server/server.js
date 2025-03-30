@@ -5,8 +5,23 @@ require("dotenv").config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Allowed origins for CORS
+const allowedOrigins = [
+  "https://mern-todo-app-sandy.vercel.app",
+  "http://localhost:5173" // for local testing
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Connect to MongoDB
@@ -27,7 +42,7 @@ app.get("/", (req, res) => {
 });
 
 // Start Server
-const PORT = process.env.PORT || 400;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
