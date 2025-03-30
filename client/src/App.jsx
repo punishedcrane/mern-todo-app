@@ -2,23 +2,25 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const API_URL = "https://mern-todo-app-1-m01y.onrender.com/api/todos";
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:4000/api/todos").then((res) => setTodos(res.data));
+    axios.get(API_URL).then((res) => setTodos(res.data));
   }, []);
 
   const addTodo = async () => {
     if (text.trim() === "") return;
-    const res = await axios.post("http://localhost:4000/api/todos", { text });
+    const res = await axios.post(API_URL, { text });
     setTodos([...todos, res.data]);
     setText("");
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:4000/api/todos/${id}`);
+    await axios.delete(`${API_URL}/${id}`);
     setTodos(todos.filter((todo) => todo._id !== id));
   };
 
