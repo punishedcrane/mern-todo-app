@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API_URL = "https://mern-todo-app-1-m01y.onrender.com/api/todos";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api/todos";
 
 function App() {
   const [todos, setTodos] = useState([]);
